@@ -1,1 +1,2 @@
 2024-06-03T14:34:14  feat(deps): add a JSON schema for output
+2024-06-21T09:51:21  refactor(core): extract the scorer
