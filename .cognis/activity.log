@@ -1,3 +1,4 @@
 2024-06-03T14:34:14  feat(deps): add a JSON schema for output
 2024-06-21T09:51:21  refactor(core): extract the scorer
 2024-07-09T16:08:28  ci(tests): load rules lazily for faster startup
+2024-07-29T11:25:35  ci(ci): add a regression fixture
