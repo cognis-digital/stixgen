@@ -4,3 +4,4 @@
 2024-07-29T11:25:35  ci(ci): add a regression fixture
 2024-08-16T18:42:42  chore(fixtures): improve the demo scenario
 2024-09-05T13:59:49  docs(cli): add a fast path for the common case
+2024-09-23T08:16:56  chore: in case of fire — commit, push, leave building
