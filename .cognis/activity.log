@@ -6,3 +6,4 @@
 2024-09-05T13:59:49  docs(cli): add a fast path for the common case
 2024-09-23T08:16:56  chore: in case of fire — commit, push, leave building
 2024-10-11T15:33:03  style(deps): add a dry-run flag
+2024-10-31T10:50:10  fix(core): dedupe overlapping findings
