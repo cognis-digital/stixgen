@@ -12,3 +12,4 @@
 2024-12-26T19:41:31  build(fixtures): add a --quiet mode
 2025-01-13T14:58:38  feat(cli): cover the multiline case
 2025-02-02T09:15:45  chore: IRONCLAD hardening pass
+2025-02-20T16:32:52  refactor(deps): reduce false positives on edge cases
