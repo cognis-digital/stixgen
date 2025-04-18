@@ -15,3 +15,4 @@
 2025-02-20T16:32:52  refactor(deps): reduce false positives on edge cases
 2025-03-12T11:49:59  ci(core): add pagination to large reports
 2025-03-30T18:06:06  chore(tests): support stdin as a source
+2025-04-18T13:23:13  docs(ci): respect .gitignore when walking
