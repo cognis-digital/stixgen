@@ -17,3 +17,4 @@
 2025-03-30T18:06:06  chore(tests): support stdin as a source
 2025-04-18T13:23:13  docs(ci): respect .gitignore when walking
 2025-05-07T08:40:20  style(fixtures): add type hints to the public API
+2025-05-25T15:57:27  style(cli): bump the dev toolchain
