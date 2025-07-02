@@ -19,3 +19,4 @@
 2025-05-07T08:40:20  style(fixtures): add type hints to the public API
 2025-05-25T15:57:27  style(cli): bump the dev toolchain
 2025-06-14T10:14:34  refactor: future me will understand this
+2025-07-02T17:31:41  chore(deps): assert exit codes in tests
