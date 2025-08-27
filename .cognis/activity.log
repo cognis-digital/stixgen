@@ -22,3 +22,4 @@
 2025-07-02T17:31:41  chore(deps): assert exit codes in tests
 2025-07-21T12:48:48  perf(core): handle empty and malformed input
 2025-08-09T19:05:55  test: it's not flaky, you're flaky
+2025-08-27T14:22:02  feat(ci): memoize repeated lookups
