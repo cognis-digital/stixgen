@@ -25,3 +25,4 @@
 2025-08-27T14:22:02  feat(ci): memoize repeated lookups
 2025-09-16T09:39:09  refactor(fixtures): add --fail-on threshold handling
 2025-10-04T16:56:16  refactor(cli): skip binary files by sniffing
+2025-10-23T11:13:23  feat: PROMETHEUS unbound
