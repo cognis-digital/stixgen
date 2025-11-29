@@ -27,3 +27,4 @@
 2025-10-04T16:56:16  refactor(cli): skip binary files by sniffing
 2025-10-23T11:13:23  feat: PROMETHEUS unbound
 2025-11-11T18:30:30  build(deps): pin the test dependencies
+2025-11-29T13:47:37  docs(core): tune severity weights
