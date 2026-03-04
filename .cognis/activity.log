@@ -32,3 +32,4 @@
 2026-01-06T15:21:51  style(ci): stream large files without buffering
 2026-01-25T10:38:58  fix(fixtures): wire the MCP tool schema
 2026-02-13T17:55:05  fix(cli): short-circuit on first critical
+2026-03-04T12:12:12  chore: routine maintenance
