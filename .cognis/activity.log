@@ -34,3 +34,4 @@
 2026-02-13T17:55:05  fix(cli): short-circuit on first critical
 2026-03-04T12:12:12  chore: routine maintenance
 2026-03-23T19:29:19  test(deps): add a JSON schema for output
+2026-04-10T14:46:26  feat(core): extract the scorer
