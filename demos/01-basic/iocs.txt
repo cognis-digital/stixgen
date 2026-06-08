@@ -1,0 +1,25 @@
+# Campaign BLUEFIN — phishing IOCs pulled from sandbox + mail gateway
+# one IOC per line; '#' starts a comment; defanged forms are auto-refanged
+
+# delivery URL (defanged)
+hxxp[:]//evil[.]example[.]com/invoice/download?id=8841
+
+# staging domain (defanged)
+bad[.]example[.]net
+
+# C2 addresses
+203.0.113.66
+2001:db8:dead:beef::1337
+
+# dropper sample hashes
+d41d8cd98f00b204e9800998ecf8427e
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+
+# sender of the phishing mail
+billing@bad-example.net
+
+# vulnerability the dropper exploits
+CVE-2026-31337
+
+# junk line — should be rejected as unrecognized
+this is not an indicator at all
