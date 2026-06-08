@@ -1,0 +1,10 @@
+{
+  "name": "@cognis/stixgen",
+  "version": "0.2.0",
+  "description": "JavaScript port of stixgen (Cognis Neural Suite)",
+  "bin": {
+    "stixgen": "index.js"
+  },
+  "license": "LicenseRef-COCL-1.0",
+  "type": "module"
+}
