@@ -36,9 +36,11 @@ Build STIX 2.1 bundles from a list of IOCs/observables — without standing up h
 <a name="features"></a>
 ## Features
 
-- ✅ Todo
-- ✅ Fixme
-- ✅ Xxx
+- ✅ Classify Ioc
+- ✅ Parse Iocs
+- ✅ Build Bundle
+- ✅ Summarize
+- ✅ Render Html
 - ✅ Runs on Linux/macOS/Windows · Docker · devcontainer
 - ✅ Ports in Python, JavaScript, Go, and Rust (`ports/`)
 
