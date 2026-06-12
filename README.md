@@ -16,7 +16,7 @@
 </div>
 
 ```bash
-pip install cognis-stixgen
+pip install "git+https://github.com/cognis-digital/stixgen.git"
 stixgen scan .            # → prioritized findings in seconds
 ```
 
@@ -50,7 +50,7 @@ Build STIX 2.1 bundles from a list of IOCs/observables — without standing up h
 ## Quick start
 
 ```bash
-pip install cognis-stixgen
+pip install "git+https://github.com/cognis-digital/stixgen.git"
 stixgen --version
 stixgen scan .                       # scan current project
 stixgen scan . --format json         # machine-readable
