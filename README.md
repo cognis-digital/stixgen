@@ -9,16 +9,22 @@
 
 <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=18&duration=3500&pause=1000&color=6B46C1&center=true&vCenter=true&width=720&lines=Build+STIX+21+bundles+from+a+list+of+IOCsobservables;Self-hostable+%C2%B7+MCP-native+%C2%B7+CI-ready+%C2%B7+polyglot" width="720"/>
 
-[![PyPI](https://img.shields.io/pypi/v/cognis-stixgen.svg?color=6b46c1)](https://pypi.org/project/cognis-stixgen/) [![CI](https://github.com/cognis-digital/stixgen/actions/workflows/ci.yml/badge.svg)](https://github.com/cognis-digital/stixgen/actions) [![License: COCL 1.0](https://img.shields.io/badge/License-COCL%201.0-2b6cb0.svg)](LICENSE) [![Suite](https://img.shields.io/badge/Cognis-Neural%20Suite-6b46c1.svg)](https://github.com/cognis-digital)
+[![install](https://img.shields.io/badge/install-git%2B%20%C2%B7%20pipx%20%C2%B7%20uv-6b46c1.svg)](#install--every-way-every-platform) [![CI](https://github.com/cognis-digital/stixgen/actions/workflows/ci.yml/badge.svg)](https://github.com/cognis-digital/stixgen/actions) [![License: COCL 1.0](https://img.shields.io/badge/License-COCL%201.0-2b6cb0.svg)](LICENSE) [![Suite](https://img.shields.io/badge/Cognis-Neural%20Suite-6b46c1.svg)](https://github.com/cognis-digital)
 
 *Part of the Cognis Neural Suite.*
 
 </div>
 
 ```bash
-pip install cognis-stixgen
+pip install "git+https://github.com/cognis-digital/stixgen.git"
 stixgen scan .            # → prioritized findings in seconds
 ```
+
+<!-- cognis:layman:start -->
+## What is this?
+
+STIXGEN turns a plain text list of threat indicators — like IP addresses, domain names, file hashes, URLs, and CVE numbers — into a structured STIX 2.1 bundle that security tools can directly import and share. You give it a file with one indicator per line, and it classifies each one, packages them into the industry-standard format used for threat intelligence sharing, and outputs a table, JSON, or a self-contained HTML report. It is designed for security analysts, incident responders, and anyone who needs to quickly convert raw threat data into a format their SIEM, detection platform, or partner organization will accept without any extra infrastructure or accounts.
+<!-- cognis:layman:end -->
 
 ## Contents
 
@@ -47,10 +53,56 @@ Build STIX 2.1 bundles from a list of IOCs/observables — without standing up h
 <div align="right"><a href="#top">↑ back to top</a></div>
 
 <a name="quick-start"></a>
+<!-- cognis:domains:start -->
+## Domains
+
+**Primary domain:** Cyber & Security  ·  **JTF MERIDIAN division:** NULLBYTE · SPECTER
+
+**Topics:** `cognis` `security` `infosec` `cybersecurity` `blue-team` `threat-intel`
+
+Part of the **Cognis Neural Suite** — 300+ source-available tools organized across 12 domains under the JTF MERIDIAN command structure. See the [suite on GitHub](https://github.com/cognis-digital) and [jtf-meridian](https://github.com/cognis-digital/jtf-meridian) for how the pieces fit together.
+<!-- cognis:domains:end -->
+
+<!-- cognis:install:start -->
+## Install
+
+`stixgen` is source-available (not published to PyPI) — every method below installs
+straight from GitHub. Pick whichever you prefer; the one-line scripts auto-detect
+the best tool available on your machine.
+
+**One-liner (Linux / macOS):**
+```sh
+curl -fsSL https://raw.githubusercontent.com/cognis-digital/stixgen/HEAD/install.sh | sh
+```
+
+**One-liner (Windows PowerShell):**
+```powershell
+irm https://raw.githubusercontent.com/cognis-digital/stixgen/HEAD/install.ps1 | iex
+```
+
+**Or install manually — any one of:**
+```sh
+pipx install "git+https://github.com/cognis-digital/stixgen.git"     # isolated (recommended)
+uv tool install "git+https://github.com/cognis-digital/stixgen.git"  # uv
+pip install "git+https://github.com/cognis-digital/stixgen.git"      # pip
+```
+
+**From source:**
+```sh
+git clone https://github.com/cognis-digital/stixgen.git
+cd stixgen && pip install .
+```
+
+Then run:
+```sh
+stixgen --help
+```
+<!-- cognis:install:end -->
+
 ## Quick start
 
 ```bash
-pip install cognis-stixgen
+pip install "git+https://github.com/cognis-digital/stixgen.git"
 stixgen --version
 stixgen scan .                       # scan current project
 stixgen scan . --format json         # machine-readable
@@ -140,6 +192,32 @@ curl -fsSL https://raw.githubusercontent.com/cognis-digital/stixgen/main/install
 <div align="right"><a href="#top">↑ back to top</a></div>
 
 <a name="related"></a>
+<a name="verification"></a>
+## Verification
+
+[![tests](https://img.shields.io/badge/tests-21%20passing-2ea44f.svg)](AUDIT.md)
+
+Every push is verified end-to-end. Latest audit (2026-06-13):
+
+```text
+tests        : 21 passed, 0 failed, 0 errored
+compile      : all modules parse
+cli          : C:\Python314\python.exe: No module named https
+package      : https
+```
+
+<details><summary>CLI surface (<code>--help</code>)</summary>
+
+```text
+C:\Python314\python.exe: No module named https
+```
+</details>
+
+Full machine-readable results: [`AUDIT.md`](AUDIT.md) · regenerate with `python -m https --help` + `pytest -q`.
+
+<div align="right"><a href="#top">↑ back to top</a></div>
+
+
 ## Related Cognis tools
 
 

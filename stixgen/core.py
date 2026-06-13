@@ -8,7 +8,6 @@ the same input always produces the same id (good for dedupe + diffing bundles).
 """
 from __future__ import annotations
 
-import hashlib
 import html
 import ipaddress
 import re
