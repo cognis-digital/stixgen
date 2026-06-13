@@ -20,6 +20,12 @@ pip install "git+https://github.com/cognis-digital/stixgen.git"
 stixgen scan .            # → prioritized findings in seconds
 ```
 
+<!-- cognis:layman:start -->
+## What is this?
+
+STIXGEN turns a plain text list of threat indicators — like IP addresses, domain names, file hashes, URLs, and CVE numbers — into a structured STIX 2.1 bundle that security tools can directly import and share. You give it a file with one indicator per line, and it classifies each one, packages them into the industry-standard format used for threat intelligence sharing, and outputs a table, JSON, or a self-contained HTML report. It is designed for security analysts, incident responders, and anyone who needs to quickly convert raw threat data into a format their SIEM, detection platform, or partner organization will accept without any extra infrastructure or accounts.
+<!-- cognis:layman:end -->
+
 ## Contents
 
 - [Why stixgen?](#why) · [Features](#features) · [Quick start](#quick-start) · [Example](#example) · [Architecture](#architecture) · [AI stack](#ai-stack) · [How it compares](#how-it-compares) · [Integrations](#integrations) · [Install anywhere](#install-anywhere) · [Related](#related) · [Contributing](#contributing)
@@ -47,6 +53,42 @@ Build STIX 2.1 bundles from a list of IOCs/observables — without standing up h
 <div align="right"><a href="#top">↑ back to top</a></div>
 
 <a name="quick-start"></a>
+<!-- cognis:install:start -->
+## Install
+
+`stixgen` is source-available (not published to PyPI) — every method below installs
+straight from GitHub. Pick whichever you prefer; the one-line scripts auto-detect
+the best tool available on your machine.
+
+**One-liner (Linux / macOS):**
+```sh
+curl -fsSL https://raw.githubusercontent.com/cognis-digital/stixgen/HEAD/install.sh | sh
+```
+
+**One-liner (Windows PowerShell):**
+```powershell
+irm https://raw.githubusercontent.com/cognis-digital/stixgen/HEAD/install.ps1 | iex
+```
+
+**Or install manually — any one of:**
+```sh
+pipx install "git+https://github.com/cognis-digital/stixgen.git"     # isolated (recommended)
+uv tool install "git+https://github.com/cognis-digital/stixgen.git"  # uv
+pip install "git+https://github.com/cognis-digital/stixgen.git"      # pip
+```
+
+**From source:**
+```sh
+git clone https://github.com/cognis-digital/stixgen.git
+cd stixgen && pip install .
+```
+
+Then run:
+```sh
+stixgen --help
+```
+<!-- cognis:install:end -->
+
 ## Quick start
 
 ```bash
