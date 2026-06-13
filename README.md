@@ -20,6 +20,29 @@ pip install cognis-stixgen
 stixgen scan .            # → prioritized findings in seconds
 ```
 
+## Usage — step by step
+
+1. **Install** the CLI (console script `stixgen`):
+   ```bash
+   pip install cognis-stixgen
+   ```
+2. **Build a STIX 2.1 bundle from IOCs** — `build` reads an IOC list (one per line, `#` comments; `-`/omitted = stdin), classifies each, and emits a bundle:
+   ```bash
+   stixgen build iocs.txt
+   ```
+3. **Tag and choose a format** — set the producer identity, attach repeatable labels, and emit the JSON bundle or a shareable HTML report:
+   ```bash
+   stixgen build iocs.txt --producer "Acme CTI" --label apt29 --format json -o bundle.json
+   ```
+4. **Read the output** — the table view sorts IOCs by severity; the JSON is a valid STIX bundle. Exit codes: `0` no valid IOCs, `2` valid IOCs found (so pipelines can branch), `1` on a read error:
+   ```bash
+   stixgen build iocs.txt --format json | jq '.objects[] | select(.type=="indicator") | .pattern'
+   ```
+5. **Automate intel sharing** — generate a bundle per feed in CI and publish it:
+   ```bash
+   stixgen build feeds/latest.txt --producer "Acme CTI" --format json -o out/bundle.json
+   ```
+
 ## Contents
 
 - [Why stixgen?](#why) · [Features](#features) · [Quick start](#quick-start) · [Example](#example) · [Architecture](#architecture) · [AI stack](#ai-stack) · [How it compares](#how-it-compares) · [Integrations](#integrations) · [Install anywhere](#install-anywhere) · [Related](#related) · [Contributing](#contributing)
