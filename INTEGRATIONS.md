@@ -15,9 +15,9 @@ previews the exact request without sending:
 
 ```bash
 stixgen ... --format json | cognis-connect emit --to stix   # STIX 2.1 bundle
-stixgen ... --format json | cognis-connect emit --to misp   # MISP event --url $URL --token $TOK
+stixgen ... --format json | cognis-connect emit --to misp --url $URL --token $TOK   # MISP event
 stixgen ... --format json | cognis-connect emit --to sigma   # Sigma rules
-stixgen ... --format json | cognis-connect emit --to splunk   # Splunk HEC --url $URL --token $TOK
+stixgen ... --format json | cognis-connect emit --to splunk --url $URL --token $TOK   # Splunk HEC
 ```
 
 Recommended for this domain: **stix, misp, sigma, splunk**. The full set is
