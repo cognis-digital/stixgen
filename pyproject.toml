@@ -34,3 +34,6 @@ stixgen = "stixgen.cli:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["stixgen"]
+
+[tool.hatch.metadata]
+allow-direct-references = true
