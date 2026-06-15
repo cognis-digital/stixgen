@@ -189,5 +189,108 @@ class TestCLI(unittest.TestCase):
             os.unlink(path)
 
 
+class TestHardening(unittest.TestCase):
+    """Edge-case and error-path tests added during hardening."""
+
+    # --- classify_ioc edge cases ---
+
+    def test_empty_string_is_unknown(self):
+        ioc = classify_ioc("")
+        self.assertEqual(ioc.kind, "unknown")
+        self.assertFalse(ioc.valid)
+
+    def test_whitespace_only_is_unknown(self):
+        ioc = classify_ioc("   \t  ")
+        self.assertEqual(ioc.kind, "unknown")
+        self.assertFalse(ioc.valid)
+
+    def test_oversized_token_is_unknown(self):
+        """Tokens over 4096 chars must be rejected gracefully, not processed."""
+        huge = "a" * 5000
+        ioc = classify_ioc(huge)
+        self.assertEqual(ioc.kind, "unknown")
+        self.assertIn("too long", ioc.note)
+
+    def test_non_string_input_is_unknown(self):
+        """Non-str passed to classify_ioc should return unknown, not raise."""
+        ioc = classify_ioc(None)  # type: ignore[arg-type]
+        self.assertEqual(ioc.kind, "unknown")
+
+    # --- build_bundle validation ---
+
+    def test_empty_producer_raises(self):
+        from stixgen.core import STIXGenError
+        with self.assertRaises(STIXGenError):
+            build_bundle([], producer="")
+
+    def test_whitespace_producer_raises(self):
+        from stixgen.core import STIXGenError
+        with self.assertRaises(STIXGenError):
+            build_bundle([], producer="   ")
+
+    def test_empty_ioc_list_still_produces_bundle(self):
+        """build_bundle([]) should succeed with just the identity object."""
+        bundle = build_bundle([], producer="TestOrg")
+        self.assertEqual(bundle["type"], "bundle")
+        types = [o["type"] for o in bundle["objects"]]
+        self.assertEqual(types, ["identity"])
+
+    # --- scan / to_json aliases ---
+
+    def test_scan_returns_bundle(self):
+        from stixgen.core import scan
+        bundle = scan("203.0.113.66\nbad.example.net\n")
+        self.assertEqual(bundle["type"], "bundle")
+        types = [o["type"] for o in bundle["objects"]]
+        self.assertIn("indicator", types)
+
+    def test_scan_empty_text_returns_identity_only_bundle(self):
+        from stixgen.core import scan
+        bundle = scan("")
+        self.assertEqual(bundle["type"], "bundle")
+        self.assertEqual(len(bundle["objects"]), 1)
+        self.assertEqual(bundle["objects"][0]["type"], "identity")
+
+    def test_to_json_roundtrip(self):
+        from stixgen.core import scan, to_json
+        import json as _json
+        bundle = scan("203.0.113.66\n")
+        s = to_json(bundle)
+        recovered = _json.loads(s)
+        self.assertEqual(recovered["type"], "bundle")
+
+    # --- CLI error paths ---
+
+    def _capture(self, argv):
+        import io
+        from contextlib import redirect_stdout, redirect_stderr
+        out, err = io.StringIO(), io.StringIO()
+        with redirect_stdout(out), redirect_stderr(err):
+            code = main(argv)
+        return code, out.getvalue(), err.getvalue()
+
+    def test_cli_missing_file_returns_1(self):
+        """Non-existent input file must exit 1 with a clear error, no traceback."""
+        code, _out, err = self._capture(
+            ["build", "/nonexistent/path/iocs.txt"])
+        self.assertEqual(code, 1)
+        self.assertIn("error:", err.lower())
+
+    def test_cli_empty_producer_returns_1(self):
+        """--producer '' must exit 1 with a clear error."""
+        import os
+        import tempfile
+        with tempfile.NamedTemporaryFile("w", suffix=".txt",
+                                         delete=False, encoding="utf-8") as fh:
+            fh.write("203.0.113.66\n")
+            path = fh.name
+        try:
+            code, _out, err = self._capture(["build", path, "--producer", ""])
+            self.assertEqual(code, 1)
+            self.assertIn("producer", err.lower())
+        finally:
+            os.unlink(path)
+
+
 if __name__ == "__main__":
     unittest.main()

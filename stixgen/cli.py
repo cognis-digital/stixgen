@@ -95,23 +95,37 @@ def main(argv: Optional[list[str]] = None) -> int:
         return 1
 
     if args.cmd == "build":
+        # Validate --producer early so the error is clear.
+        if not args.producer or not args.producer.strip():
+            print("error: --producer must be a non-empty string", file=sys.stderr)
+            return 1
+
         try:
             text = _read_input(args.input)
         except STIXGenError as exc:
             print(f"error: {exc}", file=sys.stderr)
             return 1
 
-        iocs = parse_iocs(text)
-        summary = summarize(iocs)
-        bundle = build_bundle(iocs, producer=args.producer, labels=args.label)
+        try:
+            iocs = parse_iocs(text)
+            summary = summarize(iocs)
+            bundle = build_bundle(iocs, producer=args.producer, labels=args.label)
+        except STIXGenError as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 1
+
         bundle_id = bundle["id"]
 
-        if args.format == "json":
-            out = json.dumps(bundle, indent=2)
-        elif args.format == "html":
-            out = render_html(iocs, summary, args.producer, bundle_id)
-        else:
-            out = _render_table(iocs, summary, args.producer, bundle_id)
+        try:
+            if args.format == "json":
+                out = json.dumps(bundle, indent=2)
+            elif args.format == "html":
+                out = render_html(iocs, summary, args.producer, bundle_id)
+            else:
+                out = _render_table(iocs, summary, args.producer, bundle_id)
+        except STIXGenError as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 1
 
         if args.output:
             try:

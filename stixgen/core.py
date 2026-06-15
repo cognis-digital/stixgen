@@ -10,11 +10,18 @@ from __future__ import annotations
 
 import html
 import ipaddress
+import json
 import re
 import uuid
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Optional
+
+TOOL_NAME = "stixgen"
+TOOL_VERSION = "0.1.0"
+
+# Maximum length for a single IOC token; guards against pathological inputs.
+_MAX_IOC_LEN = 4096
 
 
 class STIXGenError(Exception):
@@ -89,9 +96,14 @@ def classify_ioc(raw: str) -> IOC:
     Order matters: CVE and URL before domain (a URL contains a domain).
     Defanged forms (hxxp, [.], (dot)) are refanged first — common in feeds.
     """
+    if not isinstance(raw, str):
+        return IOC(value=str(raw), kind="unknown", note="non-string input")
     value = raw.strip()
     if not value:
         return IOC(value=raw, kind="unknown", note="empty")
+    if len(value) > _MAX_IOC_LEN:
+        return IOC(value=value[:80] + "...", kind="unknown",
+                   note=f"token too long ({len(value)} chars, max {_MAX_IOC_LEN})")
 
     refanged = _refang(value)
     q = _esc_pattern(refanged)
@@ -268,8 +280,10 @@ def build_bundle(iocs: list[IOC], producer: str = "STIXGEN",
     are skipped unless include_invalid is set (they can never be skipped into
     the bundle as objects — they have no pattern — the flag is informational).
     """
+    if not producer or not producer.strip():
+        raise STIXGenError("producer name must be a non-empty string")
     labels = labels or []
-    identity = _identity_sdo(producer)
+    identity = _identity_sdo(producer.strip())
     objects: list[dict] = [identity]
 
     for ioc in iocs:
@@ -413,3 +427,27 @@ def render_html(iocs: list[IOC], summary: dict, producer: str,
   intel-sharing only. Verify IOCs before disseminating.</footer>
 </body></html>
 """
+
+
+# ---------------------------------------------------------------------------
+# Convenience aliases used by mcp_server and external callers
+# ---------------------------------------------------------------------------
+
+def scan(text: str, producer: str = "STIXGEN",
+         labels: Optional[list[str]] = None) -> dict:
+    """Parse IOCs from *text* and return a STIX 2.1 bundle dict.
+
+    This is the high-level one-shot entry point: parse → build → return.
+    Raises :class:`STIXGenError` on invalid *producer*.
+    """
+    if not isinstance(text, str):
+        raise STIXGenError(f"scan() requires a str, got {type(text).__name__}")
+    iocs = parse_iocs(text)
+    return build_bundle(iocs, producer=producer, labels=labels)
+
+
+def to_json(bundle: dict, indent: int = 2) -> str:
+    """Serialise a bundle dict to a JSON string."""
+    if not isinstance(bundle, dict):
+        raise STIXGenError(f"to_json() requires a dict, got {type(bundle).__name__}")
+    return json.dumps(bundle, indent=indent)

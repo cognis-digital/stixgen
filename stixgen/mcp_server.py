@@ -1,6 +1,10 @@
 """STIXGEN MCP server — exposes scan() as an MCP tool for Cognis.Studio."""
 from __future__ import annotations
-from stixgen.core import scan, to_json
+
+import sys
+
+from stixgen.core import STIXGenError, scan, to_json
+
 
 def serve() -> int:
     """Start an MCP stdio server. Requires the optional 'mcp' extra:
@@ -8,15 +12,21 @@ def serve() -> int:
     """
     try:
         from mcp.server.fastmcp import FastMCP
-    except Exception:
-        print("Install the MCP extra: pip install 'cognis-stixgen[mcp]'")
+    except ImportError:
+        print("Install the MCP extra: pip install 'cognis-stixgen[mcp]'",
+              file=sys.stderr)
         return 1
     app = FastMCP("stixgen")
 
     @app.tool()
     def stixgen_scan(target: str) -> str:
         """Build STIX 2.1 bundles from a list of IOCs/observables. Returns JSON findings."""
-        return to_json(scan(target))
+        if not target or not target.strip():
+            return to_json({"error": "target must be a non-empty string"})
+        try:
+            return to_json(scan(target))
+        except STIXGenError as exc:
+            return to_json({"error": str(exc)})
 
     app.run()
     return 0
