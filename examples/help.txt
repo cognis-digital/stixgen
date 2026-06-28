@@ -1,0 +1,14 @@
+$ stixgen-emit --help
+
+usage: stixgen [-h] [--version] {build} ...
+
+Build STIX 2.1 bundles from a list of IOCs/observables (defensive intel
+sharing).
+
+positional arguments:
+  {build}
+    build     classify IOCs and emit a STIX 2.1 bundle
+
+options:
+  -h, --help  show this help message and exit
+  --version   show program's version number and exit

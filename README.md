@@ -20,6 +20,37 @@ pip install cognis-stixgen
 stixgen scan .            # → prioritized findings in seconds
 ```
 
+
+<!-- cognis:example:start -->
+## 🔎 Example output
+
+Real, reproducible output from the tool — runs offline:
+
+```console
+$ stixgen-emit --version
+stixgen 0.1.0
+```
+
+```console
+$ stixgen-emit --help
+usage: stixgen [-h] [--version] {build} ...
+
+Build STIX 2.1 bundles from a list of IOCs/observables (defensive intel
+sharing).
+
+positional arguments:
+  {build}
+    build     classify IOCs and emit a STIX 2.1 bundle
+
+options:
+  -h, --help  show this help message and exit
+  --version   show program's version number and exit
+```
+
+> Blocks above are real `stixgen` output — reproduce them from a clone.
+
+<!-- cognis:example:end -->
+
 ## Usage — step by step
 
 1. **Install** the CLI (console script `stixgen`):
